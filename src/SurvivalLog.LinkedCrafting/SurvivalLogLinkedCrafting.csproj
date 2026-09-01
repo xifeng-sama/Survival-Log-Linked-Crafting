@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>SurvivalLog.LinkedCrafting</AssemblyName>
+    <RootNamespace>SurvivalLog.LinkedCrafting</RootNamespace>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <SurvivalLogGameDir Condition="'$(SurvivalLogGameDir)' == ''">$(SURVIVAL_LOG_GAME_DIR)</SurvivalLogGameDir>
+  </PropertyGroup>
+
+  <Target Name="ValidateGameDirectory" BeforeTargets="ResolveReferences">
+    <Error
+      Condition="'$(SurvivalLogGameDir)' == ''"
+      Text="Set SurvivalLogGameDir or SURVIVAL_LOG_GAME_DIR to the Survival Log installation directory." />
+    <Error
+      Condition="!Exists('$(SurvivalLogGameDir)\BepInEx\core\BepInEx.Core.dll')"
+      Text="BepInEx.Core.dll was not found under $(SurvivalLogGameDir)\BepInEx\core." />
+    <Error
+      Condition="!Exists('$(SurvivalLogGameDir)\BepInEx\interop\HotUpdate.dll')"
+      Text="HotUpdate.dll was not found under $(SurvivalLogGameDir)\BepInEx\interop. Run the game once with BepInEx IL2CPP installed to generate interop assemblies." />
+  </Target>
+
+  <ItemGroup>
+    <Reference Include="0Harmony" HintPath="$(SurvivalLogGameDir)\BepInEx\core\0Harmony.dll" Private="false" />
+    <Reference Include="BepInEx.Core" HintPath="$(SurvivalLogGameDir)\BepInEx\core\BepInEx.Core.dll" Private="false" />
+    <Reference Include="BepInEx.Unity.IL2CPP" HintPath="$(SurvivalLogGameDir)\BepInEx\core\BepInEx.Unity.IL2CPP.dll" Private="false" />
+    <Reference Include="Il2CppInterop.Runtime" HintPath="$(SurvivalLogGameDir)\BepInEx\core\Il2CppInterop.Runtime.dll" Private="false" />
+    <Reference Include="HotUpdate" HintPath="$(SurvivalLogGameDir)\BepInEx\interop\HotUpdate.dll" Private="false" />
+    <Reference Include="Il2Cppmscorlib" HintPath="$(SurvivalLogGameDir)\BepInEx\interop\Il2Cppmscorlib.dll" Private="false" />
+    <Reference Include="ObservableCollections" HintPath="$(SurvivalLogGameDir)\BepInEx\interop\ObservableCollections.dll" Private="false" />
+    <Reference Include="R3" HintPath="$(SurvivalLogGameDir)\BepInEx\interop\R3.dll" Private="false" />
+    <Reference Include="UnityEngine" HintPath="$(SurvivalLogGameDir)\BepInEx\interop\UnityEngine.dll" Private="false" />
+    <Reference Include="UnityEngine.CoreModule" HintPath="$(SurvivalLogGameDir)\BepInEx\interop\UnityEngine.CoreModule.dll" Private="false" />
+    <Reference Include="Vuplex.WebView" HintPath="$(SurvivalLogGameDir)\BepInEx\interop\Vuplex.WebView.dll" Private="false" />
+  </ItemGroup>
+</Project>
+
